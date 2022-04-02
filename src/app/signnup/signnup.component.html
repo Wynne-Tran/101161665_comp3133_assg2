@@ -1,0 +1,108 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><h3>Angular - GraphQL</h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<div class="card border-secondary mb-3" style="margin-left: 300px; max-width: 40rem; margin-bottom: 100px; padding:30px; margin-top: 20px;">
+  <div class=" join-container1 ">
+    <header class="join-header" style="color: #32fbe2;">
+      <h1>Sign Up</h1>
+      <div *ngIf="message?.length">
+        <div style="font-weight: bold; color: 'red';">{{message}}</div>
+      </div>
+      <!-- <div *ngFor="let i of profiles | async">
+        {{i.username}}
+      </div> -->
+    </header>
+    <main class="join-main">
+      <form>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" >Username</label>
+          <input
+            class="form-control"
+            type="text"
+            name="username"
+            #username
+            placeholder="Enter username..."
+            required
+          />
+
+        </div>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" >First Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="firstname"
+            #firstname
+            placeholder="Enter first name..."
+
+            required
+          />
+
+        </div>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" >Last Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="lastname"
+            #lastname
+            placeholder="Enter last name..."
+            required
+          />
+
+        </div>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" >Email</label>
+          <input
+            class="form-control"
+            type="text"
+            name="email"
+            #email
+            placeholder="Enter email..."
+            required
+          />
+
+        </div>
+
+        <div class="form-group" style="margin-top: 5px; margin-bottom: 5px;">
+          <input id="tab-1" type="radio" value="admin" name="type" [(ngModel)] = "type"><label style="margin-left: 5px;" for="tab-1" >  Admin</label>
+          <input style="margin-left: 50px;" value="customer" type="radio" name="type" [(ngModel)] = "type"><label style="margin-left: 5px;" for="tab-2" class="tab"> Customer</label>
+        </div>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" >Password</label>
+          <input
+            #password
+            class="form-control"
+            type="text"
+            name="password"
+            placeholder="Enter password..."
+            required
+          />
+
+        </div>
+
+
+        <button type="submit" class="btn btn-outline-secondary" style="color: #32fbe2; margin-top: 30px;" (click)="register(username.value, firstname.value, lastname.value, password.value, email.value)">Sign Up</button>
+
+        <div style="margin-top: 10px;"> Already have an account ? <a routerLink="/signin" style="margin-left: 10px;color: #32fbe2;">Log In 😊</a></div>
+      </form>
+
+
+
+    </main>
+
+  </div>
+</div>
+
