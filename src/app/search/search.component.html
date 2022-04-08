@@ -1,0 +1,72 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><h3>Angular - GraphQL</h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <button type="button" class="btn btn-outline-warning" (click) = "signout()">SignOut</button>
+  </div>
+ <div style="margin-right: 30;">
+
+  <form class="d-flex">
+    <input class="form-control me-sm-2" type="text" placeholder="Search" #key>
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right: 30;" (click) = "search(key.value)">Search</button>
+  </form>
+ </div>
+</nav>
+
+<div class="card border-secondary mb-3" style="margin-left: 300px; max-width: 40rem; margin-bottom: 100px; padding:30px; margin-top: 100px; margin-bottom: 300px;">
+
+  <div *ngIf="key.value.length == 0">
+    <div style="font-weight: bold; color: 'red';">{{message}}</div>
+  <h1>All Listings</h1>
+  <div *ngIf="message?.length">
+    <div style="font-weight: bold; color: 'red';">{{message}}</div>
+  </div>
+  <div *ngFor="let d of results, let i = index" >
+    <div class="card text-white bg-primary mb-3" style="max-width: 40rem; margin-left: 10;">
+      <div class="card-header">Listing ID: {{d.listing_id}}</div>
+      <div class="card-body">
+        <h4 class="card-title">Listing Title: {{d.listing_title}}</h4>
+        <p class="card-text">Description: {{d.description}}</p>
+        <p class="card-text">Street: {{d.street}}</p>
+        <p class="card-text">City: {{d.city}}</p>
+        <p class="card-text">Postal Code: {{d.postal_code}}</p>
+        <p class="card-text">Price: {{d.price}}</p>
+        <p class="card-text">Email: {{d.email}}</p>
+        <p class="card-text">Username: {{d.username}}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <div *ngIf="key.value.length != 0">
+    <div style="font-weight: bold; color: 'red';">{{message}}</div>
+  <h1>Searching...</h1>
+  <div *ngIf="message?.length">
+    <div style="font-weight: bold; color: 'red';">{{message}}</div>
+  </div>
+  <div *ngFor="let d of resultSearching, let i = index" >
+    <div class="card text-white bg-primary mb-3" style="max-width: 40rem; margin-left: 10;">
+      <div class="card-header">Listing ID: {{d.listing_id}}</div>
+      <div class="card-body">
+        <h4 class="card-title">Listing Title: {{d.listing_title}}</h4>
+        <p class="card-text">Description: {{d.description}}</p>
+        <p class="card-text">Street: {{d.street}}</p>
+        <p class="card-text">City: {{d.city}}</p>
+        <p class="card-text">Postal Code: {{d.postal_code}}</p>
+        <p class="card-text">Price: {{d.price}}</p>
+        <p class="card-text">Email: {{d.email}}</p>
+        <p class="card-text">Username: {{d.username}}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+</div>
+

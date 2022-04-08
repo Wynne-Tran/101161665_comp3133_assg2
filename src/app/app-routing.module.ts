@@ -5,6 +5,7 @@ import { SigninComponent } from './signin/signin.component';
 import { ListingsComponent } from './listings/listings.component';
 import { BookingsComponent } from './bookings/bookings.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchComponent } from './search/search.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'listings', component: ListingsComponent },
   { path: 'bookings', component: BookingsComponent },
+  { path: 'search', component: SearchComponent },
 ];
 
 @NgModule({

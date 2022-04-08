@@ -10,6 +10,7 @@ import { BookingsComponent } from './bookings/bookings.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { GraphQLModule } from './graphql.module';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -20,7 +21,8 @@ import { GraphQLModule } from './graphql.module';
     SignnupComponent,
     SigninComponent,
     ListingsComponent,
-    BookingsComponent
+    BookingsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

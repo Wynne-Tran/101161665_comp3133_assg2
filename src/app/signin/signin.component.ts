@@ -48,6 +48,7 @@ mutation login(
 export class SigninComponent implements OnInit {
 
   profiles: Observable<any> | undefined;
+  user: any;
   message : any
 
   constructor(
@@ -62,6 +63,7 @@ export class SigninComponent implements OnInit {
 
 
   ngOnInit(){
+    console.log(history.state)
     this.profiles = this.apollo.watchQuery({
       query: PROFILES
     }).valueChanges.pipe(
@@ -90,11 +92,16 @@ export class SigninComponent implements OnInit {
 
 
   signIn(username: string,  password: string) {
-    const user = this.profiles?.forEach(e => e.find((x: any) => x.username === username && x.password === password))
-    if (user) {
-      console.log()
-      this.message = "username or password incorrect !"
-      this.router.navigate(['signin'])
+    //window.location.reload();
+    this.profiles?.forEach(e => e.find((x: any) => x.username === username && x.password === password ? this.user = x : null))
+    if(this.user != null) {
+      console.log(this.user)
+      if( this.user.type == "admin"){
+        this.router.navigate(['search'], {state: this.user})
+      }
+      else{
+        this.router.navigate(['bookings'], {state: this.user})
+      }
     }
     else{
       this.message = "username or password incorrect !"

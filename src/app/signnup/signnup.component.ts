@@ -58,14 +58,11 @@ mutation createProfile(
   styleUrls: ['./signnup.component.css']
 })
 export class SignnupComponent implements OnInit {
-
-
-
   profiles: Observable<any> | undefined;
   type: string = ""
   message:any
-  checkValid = ""
   data: any[] = []
+  user: any;
 
   constructor(
     private router: Router,
@@ -82,6 +79,7 @@ export class SignnupComponent implements OnInit {
         return result.data.profile.profiles;
       })
     )
+
   }
 
 
@@ -108,22 +106,23 @@ export class SignnupComponent implements OnInit {
         type: type
       }
     }).subscribe(() => {
-      this.message = "Registered ! Please Log In"
-      this.router.navigate(['signup'])
-    })
+      this.message = "Registered ! Please Log In",
+      this.router.navigate(['signin']);
+    });
   }
 
-  register(username: string, firstname: string, lastname: string, password: string, email: string, type?:string) {
-    const user = this.profiles?.forEach(e => e.find((x: any) => x.username === username ? this.checkValid = username : null))
-    console.log(this.checkValid)
-    // if (user()) {
-    //   this.message = 'Username "' + username + '" is already taken',
-    //   this.router.navigate(['/'])
-    // }else{
-    //   this.message = "",
-    //   this.createProfile(username, firstname, lastname, password, email, type);
-    // }
-  }
+  register (username: string, firstname: string, lastname: string, password: string, email: string, type?:string) {
+    window.location.reload();
+    this.profiles?.forEach((x: any) => x.find((e: any) => e.username === username ? (this.user = e.username) : null))
+    if(this.user == 'underfine' || this.user === username){
+      this.message = 'Username is exits'
+      this.router.navigate(['/']);
+    }
+    else{
+      this.message = '';
+      this.createProfile(username, firstname, lastname, password, email, type)
+    }
 
+  }
 
 }
