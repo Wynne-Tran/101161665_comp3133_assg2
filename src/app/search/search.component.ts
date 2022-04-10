@@ -12,6 +12,7 @@ const LISTINGS = gql`
 {
   adminListing{
     adminListings{
+      _id,
       listing_id,
       listing_title,
       description,
@@ -66,11 +67,13 @@ export class SearchComponent implements OnInit {
 
   list: Observable<any> | undefined;
   data: any
-  userType: string | undefined
+  userType: any
   message: string | undefined
   results: any[] = []
   resultSearching: any[] = []
   key: string | undefined
+  user_id: any
+  user_username: any
 
 
   constructor(
@@ -78,12 +81,14 @@ export class SearchComponent implements OnInit {
     private route: ActivatedRoute,
     private HttpClient: HttpClient,
     private apollo: Apollo) {
-      this.data = history.state
+
     }
 
-  ngOnInit(){
-    this.data = history.state
-    console.log(this.data)
+  ngOnInit (){
+    this.userType = this.route.snapshot.queryParamMap.get('type')
+    this.user_id = this.route.snapshot.queryParamMap.get('id')
+    this.user_username = this.route.snapshot.queryParamMap.get('username')
+
     this.list = this.apollo.watchQuery({
       query: LISTINGS
     }).valueChanges.pipe(
@@ -95,25 +100,8 @@ export class SearchComponent implements OnInit {
 
     this.loadData()
 
-    // await this.getInfo()
-    // if (this.userType == "admin"){
-    //   this.list = this.apollo.watchQuery({
-    //     query: LISTINGS
-    //   }).valueChanges.pipe(
-    //     map((result: any) => {
-    //       console.log('listing: ' + JSON.stringify(result.data.adminListing.adminListings));
-    //       return result.data.adminListing.adminListings
-    //     })
-    //   )
-    // }
-    // else{
-    //   this.message = "User is invalid !"
-    //   this.router.navigate(['search'])
-    //   alert(this.message)
-    // }
-    // this.search('');
-    // console.log(this.results)
   }
+
 
   loadData = () => {
     this.list?.forEach(element => {
@@ -122,6 +110,7 @@ export class SearchComponent implements OnInit {
         await  this.results.push(
 
           {
+            _id: e._id,
             listing_id: e.listing_id,
             listing_title: e.listing_title,
             description: e.description,
@@ -137,26 +126,11 @@ export class SearchComponent implements OnInit {
     console.log('results: ' + JSON.stringify(this.results))
 }
 
-  getInfo = async() => {
-    this.data = (history.state)
-    console.log(this.data)
-    // .then(
-    //   this.userType = this.data.type
-    // )
-    // console.log('userType:' + this.userType)
-  }
 
   search = (info: string) => {
-    // this.getInfo()
-    // if(this.userType == "admin") {
 
-    // }
-    // else{
-    //   this.message = "User invalid !"
-    //   this.router.navigate(['/search'])
-    // }
     this.list?.forEach(element => {
-      element.forEach(async (e: any) => e.description === (info) ?
+      element.forEach(async (e: any) => (e.listing_title === (info) || e.city === (info) || e.postal_code === (info)) ?
 
         (await  this.resultSearching.push(
           {
@@ -183,4 +157,27 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['signin'])
   }
 
+  addListing() {
+    this.router.navigate(['listings'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  addBooking(listID: string, listing_id: string) {
+    this.router.navigate(['book-listing'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username, listID: listID, listing_id: listing_id}})
+  }
+
+  viewListing() {
+    this.router.navigate(['viewlisting'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  viewBooking() {
+    this.router.navigate(['viewbooking'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  goBooking() {
+    this.router.navigate(['bookings'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  goAllList() {
+    this.router.navigate(['search'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
 }

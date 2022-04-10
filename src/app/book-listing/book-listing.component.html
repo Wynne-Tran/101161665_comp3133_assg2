@@ -1,0 +1,101 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><h3>Angular - GraphQL</h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<div class="card border-secondary mb-3" style="margin-left: 300px; max-width: 40rem; margin-bottom: 100px; padding:30px; margin-top: 100px; margin-bottom: 300px;">
+  <div class=" join-container ">
+    <header class="join-header" style="color: #32fbe2;">
+      <h1>Add Booking</h1>
+      <div *ngIf="message?.length">
+        <div style="font-weight: bold; color: 'red';">{{message}}</div>
+      </div>
+    </header>
+    <main class="join-main">
+      <form>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" for="listing_id">Listing ID</label>
+          <input
+            class="form-control"
+            type="text"
+            value={{get_listing}}
+            readonly
+          />
+
+        </div>
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" for="listing_title">Booking ID</label>
+          <input
+            #booking_id
+            class="form-control"
+            type="text"
+            placeholder="Enter listing title..."
+            required
+
+          />
+        </div>
+
+
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" for="street">Booking Start</label>
+          <input
+            #booking_start
+            class="form-control"
+            type="date"
+            required
+
+          />
+        </div>
+
+
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" for="city">Booking End</label>
+          <input
+            #booking_end
+            class="form-control"
+            type="date"
+            required
+
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label style="color: #32fbe2;" for="postal_code">Username</label>
+          <input
+            #username
+            class="form-control"
+            type="text"
+            value={{user_username}}
+            readonly
+
+          />
+        </div>
+
+
+
+        <div class="row">
+          <button type="button" class="btn btn-outline-secondary" style="color: #32fbe2; margin-top: 30px;"
+          (click)="book_listing(
+            user_id, list_id, booking_id.value,  booking_start.value, booking_end.value
+          )"
+
+          >Add</button>
+
+            <button type="button" class="btn btn-outline-secondary" style="color: #32fbe2; margin-top: 30px;" (click)="goAllList()" >Cancel</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+

@@ -5,13 +5,16 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div style="margin-right: 30;">
+
       <form class="d-flex">
         <input class="form-control me-sm-2" type="text" placeholder="Search" #key>
         <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right: 30;" (click) = "search(key.value)">Search</button>
       </form>
      </div>
-    <div *ngIf="userType == 'admin' ">
+
+     <div *ngIf="userType == 'admin' ">
       <button type="button" class="btn btn-outline-warning" (click)="goAllList()">All Listings</button>
       <button type="button" class="btn btn-outline-warning" (click)="viewListing()">View Your Listing</button>
       <button type="button" class="btn btn-outline-warning" (click)="addListing()">Add Listing</button>
@@ -48,9 +51,6 @@
         <p class="card-text">Price: {{d.price}}</p>
         <p class="card-text">Email: {{d.email}}</p>
         <p class="card-text">Username: {{d.username}}</p>
-        <div *ngIf="userType == 'customer' ">
-          <button type="button" class="btn btn-outline-warning" (click) = "addBooking(d._id, d.listing_id)">Booking</button>
-        </div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
 
   <div *ngIf="key.value.length != 0">
     <div style="font-weight: bold; color: 'red';">{{message}}</div>
-  <h1>Search {{key.value}}</h1>
+  <h1>Search Listing...</h1>
   <div *ngIf="message?.length">
     <div style="font-weight: bold; color: 'red';">{{message}}</div>
   </div>
@@ -78,8 +78,6 @@
       </div>
     </div>
   </div>
-
-
   </div>
 
 

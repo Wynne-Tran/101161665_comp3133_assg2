@@ -112,8 +112,23 @@ export class SignnupComponent implements OnInit {
   }
 
   register (username: string, firstname: string, lastname: string, password: string, email: string, type?:string) {
-    window.location.reload();
-    this.profiles?.forEach((x: any) => x.find((e: any) => e.username === username ? (this.user = e.username) : null))
+
+    if(username == "" || password == "" || email == ""){
+      this.message = "all field are require !"
+      this.router.navigate(['/'])
+    }
+
+    else if(firstname =="" || lastname == ""){
+      this.message = "all field are require !"
+      this.router.navigate(['/'])
+    }
+    else if(password.length < 6){
+      this.message = "Password invalid"
+      this.router.navigate(['/'])
+    }
+    else{
+
+      this.profiles?.forEach((x: any) => x.find((e: any) => e.username === username ? (this.user = e.username) : null))
     if(this.user == 'underfine' || this.user === username){
       this.message = 'Username is exits'
       this.router.navigate(['/']);
@@ -122,6 +137,10 @@ export class SignnupComponent implements OnInit {
       this.message = '';
       this.createProfile(username, firstname, lastname, password, email, type)
     }
+
+    }
+
+
 
   }
 

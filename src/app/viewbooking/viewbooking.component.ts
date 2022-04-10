@@ -9,7 +9,6 @@ import { map } from 'rxjs';
 
 
 
-
 const BOOKINGS = gql`
 {
   customerBooking{
@@ -25,13 +24,12 @@ const BOOKINGS = gql`
 }
 `;
 
-
 @Component({
-  selector: 'app-bookings',
-  templateUrl: './bookings.component.html',
-  styleUrls: ['./bookings.component.css']
+  selector: 'app-viewbooking',
+  templateUrl: './viewbooking.component.html',
+  styleUrls: ['./viewbooking.component.css']
 })
-export class BookingsComponent implements OnInit {
+export class ViewbookingComponent implements OnInit {
 
   listing_id: string | undefined
   booking_id: string | undefined
@@ -84,7 +82,7 @@ export class BookingsComponent implements OnInit {
 
   loadData = () => {
     this.book?.forEach(element => {
-      element.forEach(async (e: any) => e.username == this.user_username?
+      element.forEach(async (e: any) =>
       (
         await  this.results.push(
 
@@ -97,7 +95,7 @@ export class BookingsComponent implements OnInit {
             username: e.username,
 
           }
-        )) : null
+        ))
       )})
     console.log('results: ' + JSON.stringify(this.results))
 }
@@ -127,6 +125,5 @@ goAllList() {
 viewBooking() {
   this.router.navigate(['viewbooking'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
 }
-
 
 }

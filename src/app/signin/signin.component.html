@@ -5,55 +5,89 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <div style="margin-right: 30;">
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search" #key>
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right: 30;" (click) = "search(key.value)">Search</button>
+      </form>
+     </div>
   </div>
+
 </nav>
 
-<div class="card border-secondary mb-3" style="margin-left: 300px; max-width: 40rem; margin-bottom: 100px; padding:30px; margin-top: 100px; margin-bottom: 300px;">
-  <div class=" join-container ">
-    <header class="join-header" style="color: #32fbe2;">
-      <h1>Sign In</h1>
-      <div *ngIf="message?.length">
-        <div style="font-weight: bold; color: 'red';">{{message}}</div>
+
+
+  <div class="card border-secondary mb-3" style="margin-left: 300px; max-width: 40rem; margin-bottom: 100px; padding:30px; margin-top: 100px; margin-bottom: 300px;">
+      <div class=" join-container ">
+        <header class="join-header" style="color: #32fbe2;">
+          <h1>Sign In</h1>
+          <div *ngIf="message?.length">
+            <div style="font-weight: bold; color: 'red';">{{message}}</div>
+          </div>
+        </header>
+        <main class="join-main">
+          <form>
+
+            <div class="form-group">
+              <label style="color: #32fbe2;" for="username">Username</label>
+              <input
+              #username
+                class="form-control"
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Enter username..."
+                required
+              />
+
+            </div>
+
+            <div class="form-group">
+              <label style="color: #32fbe2;" for="username">Password</label>
+              <input
+                #password
+                class="form-control"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter password..."
+                required
+
+              />
+
+            </div>
+
+
+
+            <button type="button" class="btn btn-outline-secondary" style="color: #32fbe2; margin-top: 30px;" (click) = "signIn(username.value, password.value)" >Log In</button>
+          <div style="margin-top: 10px;"> Don't have an account ?<a href="/" style="margin-left: 10px;color: #32fbe2;">Sign Up 😊</a></div>
+          </form>
+        </main>
       </div>
-    </header>
-    <main class="join-main">
-      <form>
-
-        <div class="form-group">
-          <label style="color: #32fbe2;" for="username">Username</label>
-          <input
-           #username
-            class="form-control"
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter username..."
-            required
-          />
-
-        </div>
-
-        <div class="form-group">
-          <label style="color: #32fbe2;" for="username">Password</label>
-          <input
-            #password
-            class="form-control"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter password..."
-            required
-
-          />
-
-        </div>
 
 
 
-        <button type="button" class="btn btn-outline-secondary" style="color: #32fbe2; margin-top: 30px;" (click) = "signIn(username.value, password.value)" >Log In</button>
-      <div style="margin-top: 10px;"> Don't have an account ?<a href="/" style="margin-left: 10px;color: #32fbe2;">Sign Up 😊</a></div>
-      </form>
-    </main>
+
+<div style="margin-top: 50;">
+  <div *ngIf="key.value.length != 0">
+    <div style="font-weight: bold; color: 'red';">{{message}}</div>
+  <h1>Search {{key.value}}</h1>
+  <div *ngFor="let d of resultSearching, let i = index" >
+    <div class="card text-white bg-primary mb-3" style="max-width: 40rem; margin-left: 10;">
+      <div class="card-header">Listing ID: {{d.listing_id}}</div>
+      <div class="card-body">
+        <h4 class="card-title">Listing Title: {{d.listing_title}}</h4>
+        <p class="card-text">Description: {{d.description}}</p>
+        <p class="card-text">Street: {{d.street}}</p>
+        <p class="card-text">City: {{d.city}}</p>
+        <p class="card-text">Postal Code: {{d.postal_code}}</p>
+        <p class="card-text">Price: {{d.price}}</p>
+        <p class="card-text">Email: {{d.email}}</p>
+        <p class="card-text">Username: {{d.username}}</p>
+      </div>
+    </div>
   </div>
 </div>
 
+</div>

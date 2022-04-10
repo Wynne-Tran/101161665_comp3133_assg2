@@ -11,6 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { GraphQLModule } from './graphql.module';
 import { SearchComponent } from './search/search.component';
+import { ViewListingComponent } from './view-listing/view-listing.component';
+import { BookListingComponent } from './book-listing/book-listing.component';
+import { ViewbookingComponent } from './viewbooking/viewbooking.component';
 
 
 
@@ -22,7 +25,10 @@ import { SearchComponent } from './search/search.component';
     SigninComponent,
     ListingsComponent,
     BookingsComponent,
-    SearchComponent
+    SearchComponent,
+    ViewListingComponent,
+    BookListingComponent,
+    ViewbookingComponent
   ],
   imports: [
     BrowserModule,

@@ -1,52 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag'
 
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
 import { Observable } from 'rxjs';
-import { map }  from 'rxjs/operators'
-
-
-const PROFILES = gql`
-{
-  profile{
-    profiles{
-      _id,
-      username,
-      firstname,
-      lastname,
-      password,
-      email,
-      type
-    }
-  }
-}
-`;
-
-
-const AUTH = gql`
-mutation login(
-  $username: String,
-  $password: String){
-    login(
-      loginInput: {
-      username: $username,
-      password: $password,
-    }){
-      username,
-      password,
-    }
-  }
-`
-
+import { map } from 'rxjs';
 
 
 const LISTINGS = gql`
 {
   adminListing{
     adminListings{
-      _id,
       listing_id,
       listing_title,
       description,
@@ -62,14 +27,12 @@ const LISTINGS = gql`
 `;
 
 
-
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  selector: 'app-view-listing',
+  templateUrl: './view-listing.component.html',
+  styleUrls: ['./view-listing.component.css']
 })
-export class SigninComponent implements OnInit {
-
+export class ViewListingComponent implements OnInit {
 
   listing_id: string | undefined
   listing_title: string | undefined
@@ -84,37 +47,25 @@ export class SigninComponent implements OnInit {
   list: Observable<any> | undefined;
   data: any
   userType: any
+  message: string | undefined
   results: any[] = []
   resultSearching: any[] = []
   key: string | undefined
   user_id: any
   user_username: any
 
-  profiles: Observable<any> | undefined;
-  user: any
-  message : any
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private HttpClient: HttpClient,
-    private apollo: Apollo
-  ) {
+    private apollo: Apollo) {
 
-  }
+    }
 
-
-
-  ngOnInit(){
-    console.log(history.state)
-    this.profiles = this.apollo.watchQuery({
-      query: PROFILES
-    }).valueChanges.pipe(
-      map((result: any) => {
-        console.log('data: ' + JSON.stringify(result.data.profile.profiles));
-        return result.data.profile.profiles;
-      })
-    )
+  ngOnInit (){
+    this.userType = this.route.snapshot.queryParamMap.get('type')
+    this.user_id = this.route.snapshot.queryParamMap.get('id')
+    this.user_username = this.route.snapshot.queryParamMap.get('username')
 
     this.list = this.apollo.watchQuery({
       query: LISTINGS
@@ -126,55 +77,17 @@ export class SigninComponent implements OnInit {
     )
 
     this.loadData()
+
   }
-
-  login(username: string, password: string) {
-    this.apollo.mutate({
-      mutation: AUTH,
-      refetchQueries: [{query: PROFILES}],
-      variables: {
-        username: username,
-        password: password,
-      }
-    }).subscribe(() => {
-      console.log("OK")
-    })
-  }
-
-
-
-
-  signIn = (username: string,  password: string) => {
-    this.profiles?.forEach(e => e.find((x: any) => x.username === username && x.password === password ? this.user = x : null))
-
-    if(username == "" || password == ""){
-      this.message = "all field are require !"
-      this.router.navigate(['signin'])
-    }
-    if(this.user != null) {
-      console.log(this.user)
-      this.router.navigate(['search'],  {queryParams:{type: this.user.type, id: this.user._id, username: this.user.username, email: this.user.email}})
-    }
-    else if(this.user == undefined){
-      window.onload
-    }
-    else{
-      this.message = "username or password incorrect !"
-      this.router.navigate(['signin'])
-    }
-  }
-
-
 
 
   loadData = () => {
     this.list?.forEach(element => {
-      element.forEach(async (e: any) =>
-
+      element.forEach(async (e: any) => e.username == this.user_username ?
+      (
         await  this.results.push(
 
           {
-            _id: e._id,
             listing_id: e.listing_id,
             listing_title: e.listing_title,
             description: e.description,
@@ -185,16 +98,28 @@ export class SigninComponent implements OnInit {
             email: e.email,
             username:  e.username
           }
-
-      ))})
+      )) : null
+      )})
     console.log('results: ' + JSON.stringify(this.results))
 }
 
+  // getInfo = async() => {
+  //   await (history.state)
+  //   this.userType = (history.state).userType
+  //   console.log('userType:' + this.userType)
+  // }
 
   search = (info: string) => {
+    // this.getInfo()
+    // if(this.userType == "admin") {
 
+    // }
+    // else{
+    //   this.message = "User invalid !"
+    //   this.router.navigate(['/search'])
+    // }
     this.list?.forEach(element => {
-      element.forEach(async (e: any) => (e.listing_title === (info) || e.city === (info) || e.postal_code === (info)) ?
+      element.forEach(async (e: any) => e.description === (info) ?
 
         (await  this.resultSearching.push(
           {
@@ -203,7 +128,7 @@ export class SigninComponent implements OnInit {
             description: e.description,
             street: e.street,
             city: e.city,
-            postal_code: e.postal_code,
+            postal_code:  e.postal_code,
             price:   e.price,
             email: e.email,
             username:  e.username
@@ -215,6 +140,30 @@ export class SigninComponent implements OnInit {
         this.message = "No result..."
       }
       console.log(this.resultSearching)
+  }
+
+  signout() {
+    this.router.navigate(['signin'])
+  }
+
+  addListing() {
+    this.router.navigate(['listings'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  viewListing() {
+    this.router.navigate(['viewlisting'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  goBooking() {
+    this.router.navigate(['bookings'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  goAllList() {
+    this.router.navigate(['search'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
+  }
+
+  viewBooking() {
+    this.router.navigate(['viewbooking'],  {queryParams:{type: this.userType, id: this.user_id, username: this.user_username}})
   }
 
 }
