@@ -11,10 +11,9 @@
       <button type="button" class="btn btn-outline-warning" (click)="addListing()">Add Listing</button>
       <button type="button" class="btn btn-outline-warning" (click) = "signout()">SignOut</button>
     </div>
-    <div *ngIf="userType == 'customer' ">
+    <div *ngIf="userType != 'admin' ">
       <button type="button" class="btn btn-outline-warning" (click)="goAllList()">All Listings</button>
       <button type="button" class="btn btn-outline-warning" (click)="viewBooking()">All Bookings</button>
-      <button type="button" class="btn btn-outline-warning" (click) = "signout()">Add Booking</button>
       <button type="button" class="btn btn-outline-warning" (click) = "signout()">SignOut</button>
     </div>
 

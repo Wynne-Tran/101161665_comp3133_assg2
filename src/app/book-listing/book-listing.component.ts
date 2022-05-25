@@ -256,7 +256,7 @@ book_listing(id: String,
       this.user_username
     )
 
-    this.goBooking()
+    this.addListing()
     }
 
 
